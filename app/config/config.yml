@@ -98,7 +98,7 @@ lexik_jwt_authentication:
 
 nelmio_cors:
     defaults:
-        allow_origin:   ["%cors_allow_origin%"]
+        allow_origin:   ['*']
         allow_methods:  ["POST", "PUT", "GET", "DELETE", "OPTIONS"]
         allow_headers:  ["content-type", "authorization"]
         expose_headers: ["link"]
