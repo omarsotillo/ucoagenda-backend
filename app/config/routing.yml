@@ -8,11 +8,6 @@ fos_user:
 api_login_check:
     path: /api/login_check
 
-users:
-    type: rest
-    prefix: /api
-    resource: "@AppBundle/Controller/api/UserController.php"
-
 faculties:
     type: rest
     prefix: /api
