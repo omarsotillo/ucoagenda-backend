@@ -1,0 +1,34 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+api_login_check:
+    path: /api/login_check
+
+users:
+    type: rest
+    prefix: /api
+    resource: "@AppBundle/Controller/api/UserController.php"
+
+faculties:
+    type: rest
+    prefix: /api
+    resource: "@AppBundle/Controller/api/FacultyController.php"
+
+degrees:
+    type: rest
+    prefix: /api
+    resource: "@AppBundle/Controller/api/DegreeController.php"
+
+lesson:
+    type: rest
+    prefix: /api
+    resource: "@AppBundle/Controller/api/LessonController.php"
+
+hour:
+    type: rest
+    prefix: /api
+    resource: "@AppBundle/Controller/api/HourController.php"
