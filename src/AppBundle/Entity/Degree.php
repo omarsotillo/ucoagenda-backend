@@ -38,6 +38,12 @@ class Degree
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lesson",mappedBy="degree")
      */
     private $lessons;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User",mappedBy="degree")
+     */
+    private $users;
+
     /**
      * Get id
      *
@@ -95,6 +101,7 @@ class Degree
     {
         return $this->faculty;
     }
+
     /**
      * Constructor
      */
@@ -135,5 +142,63 @@ class Degree
     public function getLessons()
     {
         return $this->lessons;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Degree
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Degree
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

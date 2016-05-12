@@ -56,6 +56,9 @@ class FacultyController extends FOSRestController
      */
     public function postFacultyAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $name = $request->request->get('name', null);
         $location = $request->request->get('location', null);
 
