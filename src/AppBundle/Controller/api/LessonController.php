@@ -63,13 +63,29 @@ class LessonController extends FOSRestController
      * @param Lesson $lesson
      * @return array
      * @View()
-     * @ParamConverter("faculty",class="AppBundle:Faculty")
+     * @ParamConverter("lesson",class="AppBundle:Lesson")
      */
     public function getLessonAction(Lesson $lesson)
     {
         $view = $this->view($lesson, 200)
-            ->setTemplateVar('degrees');
+            ->setTemplateVar('lesson');
 
         return $this->handleView($view);
+    }
+
+    /**
+     * @param Lesson $lesson
+     * @View()
+     * @ParamConverter("lesson",class="AppBundle:Lesson")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteLessonAction(Lesson $lesson)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($lesson);
+        $em->flush();
+
+        return $this->handleView($this->view()->setStatusCode(200)->setHeader('Status', "Deleted correctly"));
     }
 }
