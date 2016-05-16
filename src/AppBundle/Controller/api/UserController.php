@@ -30,12 +30,14 @@ class UserController extends FOSRestController
             $user->setPlainPassword($password);
             $user->setIsFirstTime(true);
             $user->setEmail($email);
+            $user->setEnabled(true);
+            $user->setRoles(array('ROLE_USER'));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            $array = array('user_username' => $user->getUsername(),'user_email' => $user->getEmail(), 'status' => "User added correctly");
+            $array = array('user_username' => $user->getUsername(), 'user_email' => $user->getEmail(), 'status' => "User added correctly");
             $view = $this->view()
                 ->setStatusCode(200)
                 ->setData($array);
@@ -51,13 +53,38 @@ class UserController extends FOSRestController
 
     /**
      * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      * @View()
-     * @Put("/api/user/{id}")
+     * @Put("/api/user")
      */
-    public function updateUser(Request $request, $id){
-        $user=$this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('id'=>$id));
+    public function updateUser(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        // $user = $em->getRepository('AppBundle:User')->find($id);
 
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
+        $facultyID = $request->request->get('_facultyId', null);
+        $degreeID = $request->request->get('_degreeId', null);
+
+        $view = $this->view();
+
+        if (isset($user)) {
+
+            if (isset($facultyID)) {
+                $user->setFaculty($facultyID);
+            }
+            if (isset($degreeID)) {
+                $user->setDegree($degreeID);
+            }
+            $user->setIsFirstTime(false);
+            $em->flush();
+
+            $view->setStatusCode(200);
+            $view->setData($user);
+        }
+        return $this->handleView($view);
     }
 
 }

@@ -60,7 +60,7 @@ class DegreeController extends FOSRestController
             $view = $this->view($degree, 200)->setTemplateVar("degrees");
         } else {
             $view = $this->view()
-                ->setHeader("error","Not good way of sending the files")
+                ->setHeader("error", "Not good way of sending the files")
                 ->setStatusCode(400);
         }
 
@@ -71,8 +71,9 @@ class DegreeController extends FOSRestController
      * @param Degree $degree
      * @ParamConverter("degree",class="AppBundle:Degree")
      */
-    public function deleteDegreeAction(Degree $degree){
-        $em=$this->getDoctrine()->getManager();
+    public function deleteDegreeAction(Degree $degree)
+    {
+        $em = $this->getDoctrine()->getManager();
         $em->remove($degree);
         $em->flush();
     }

@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class LessonController extends FOSRestController
 {
@@ -16,10 +17,9 @@ class LessonController extends FOSRestController
      */
     public function getLessonsAction()
     {
-        $lessons=$this->getDoctrine()->getRepository("AppBundle:Lesson")->findAll();
+        $lessons = $this->getDoctrine()->getRepository("AppBundle:Lesson")->findAll();
         $view = $this->view($lessons, 200)
-            ->setTemplateVar('lessons')
-        ;
+            ->setTemplateVar('lessons');
 
         return $this->handleView($view);
     }
@@ -31,12 +31,32 @@ class LessonController extends FOSRestController
      */
     public function postLessonAction(Request $request)
     {
-        $data = json_decode($request->getContent(), true);
-        $lesson=new Lesson($data['name']);
-        $em=$this->getDoctrine()->getManager();
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+        $degree_id = $request->request->get('degree_id', null);
+        $name = $request->request->get('name', null);
 
-        $em->persist($lesson);
-        $em->flush();
+        if (isset($degree_id) && isset($name)) {
+            $em = $this->getDoctrine()->getManager();
+
+            $degree = $this->getDoctrine()->getRepository('AppBundle:Degree')->find($degree_id);
+            $lesson = new Lesson();
+            $lesson->setDegree($degree);
+            $lesson->setName($name);
+
+            $em->persist($lesson);
+            $em->flush();
+
+            $data = array('Lesson added' => $lesson, 'status message' => "Added correctly the lesson");
+            $view = $this->view()->setStatusCode(200)->setData($data);
+        } else {
+            $data = array('Status_Code' => "Error adding the lesson");
+            $view = $this->view()->setStatusCode(401) > setData($data);
+        }
+
+        return $this->handleView($view);
+
     }
 
     /**
@@ -45,10 +65,10 @@ class LessonController extends FOSRestController
      * @View()
      * @ParamConverter("faculty",class="AppBundle:Faculty")
      */
-    public function getLessonAction(Lesson $lesson){
+    public function getLessonAction(Lesson $lesson)
+    {
         $view = $this->view($lesson, 200)
-            ->setTemplateVar('degrees')
-        ;
+            ->setTemplateVar('degrees');
 
         return $this->handleView($view);
     }
