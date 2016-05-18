@@ -24,16 +24,30 @@ class Hour
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="startHour", type="datetime")
+     * @ORM\Column(name="startHour", type="time")
      */
     private $startHour;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="finishHour", type="datetime")
+     * @ORM\Column(name="finishHour", type="time")
      */
     private $finishHour;
+
+    /**
+     * @ORM\Column(name="day_of_the_week",type="integer")
+     */
+    private $dayOfTheWeek;
+
+    /**
+     * @ORM\Column(name="class_location",type="string")
+     */
+    private $classLocation;
+    /**
+     * @ORM\Column(name="is_theory",type="boolean")
+     */
+    private $isTheory;
 
     /**
      * @var int
@@ -47,6 +61,7 @@ class Hour
      * @ORM\JoinColumn(name="lesson_id",referencedColumnName="id",onDelete="CASCADE")
      */
     private $lesson;
+
 
     /**
      * Get id
@@ -152,5 +167,77 @@ class Hour
     public function getLesson()
     {
         return $this->lesson;
+    }
+
+    /**
+     * Set dayOfTheWeek
+     *
+     * @param string $dayOfTheWeek
+     *
+     * @return Hour
+     */
+    public function setDayOfTheWeek($dayOfTheWeek)
+    {
+        $this->dayOfTheWeek = $dayOfTheWeek;
+
+        return $this;
+    }
+
+    /**
+     * Get dayOfTheWeek
+     *
+     * @return string
+     */
+    public function getDayOfTheWeek()
+    {
+        return $this->dayOfTheWeek;
+    }
+
+    /**
+     * Set classLocation
+     *
+     * @param string $classLocation
+     *
+     * @return Hour
+     */
+    public function setClassLocation($classLocation)
+    {
+        $this->classLocation = $classLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get classLocation
+     *
+     * @return string
+     */
+    public function getClassLocation()
+    {
+        return $this->classLocation;
+    }
+
+    /**
+     * Set isTheory
+     *
+     * @param boolean $isTheory
+     *
+     * @return Hour
+     */
+    public function setIsTheory($isTheory)
+    {
+        $this->isTheory = $isTheory;
+
+        return $this;
+    }
+
+    /**
+     * Get isTheory
+     *
+     * @return boolean
+     */
+    public function getIsTheory()
+    {
+        return $this->isTheory;
     }
 }

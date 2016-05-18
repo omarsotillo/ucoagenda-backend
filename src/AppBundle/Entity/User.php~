@@ -40,7 +40,11 @@ class User extends BaseUser
      * @ORM\JoinColumn(name="degree_id",referencedColumnName="id")
      */
     private $degree;
-    
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Lesson",inversedBy="users")
+     */
+    private $lessons;
     /**
      * Get id
      *
@@ -130,5 +134,39 @@ class User extends BaseUser
     public function getDegree()
     {
         return $this->degree;
+    }
+
+    /**
+     * Add lesson
+     *
+     * @param \AppBundle\Entity\Lesson $lesson
+     *
+     * @return User
+     */
+    public function addLesson(\AppBundle\Entity\Lesson $lesson)
+    {
+        $this->lessons[] = $lesson;
+
+        return $this;
+    }
+
+    /**
+     * Remove lesson
+     *
+     * @param \AppBundle\Entity\Lesson $lesson
+     */
+    public function removeLesson(\AppBundle\Entity\Lesson $lesson)
+    {
+        $this->lessons->removeElement($lesson);
+    }
+
+    /**
+     * Get lessons
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLessons()
+    {
+        return $this->lessons;
     }
 }

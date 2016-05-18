@@ -29,6 +29,16 @@ class Lesson
     private $name;
 
     /**
+     * @ORM\Column(name="year",type="integer")
+     */
+    private $year;
+
+    /**
+     * @ORM\Column(name="quarter",type="integer")
+     */
+    private $quarter;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Degree",inversedBy="lessons")
      * @ORM\JoinColumn(name="degree_id",referencedColumnName="id",onDelete="CASCADE")
      */
@@ -38,6 +48,12 @@ class Lesson
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Hour",mappedBy="lesson")
      */
     private $hours;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User",mappedBy="lesson")
+     */
+    private $users;
+
     /**
      * Get id
      *
@@ -95,6 +111,7 @@ class Lesson
     {
         return $this->degree;
     }
+
     /**
      * Constructor
      */
@@ -135,5 +152,87 @@ class Lesson
     public function getHours()
     {
         return $this->hours;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Lesson
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     *
+     * @return Lesson
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * Set quarter
+     *
+     * @param integer $quarter
+     *
+     * @return Lesson
+     */
+    public function setQuarter($quarter)
+    {
+        $this->quarter = $quarter;
+
+        return $this;
+    }
+
+    /**
+     * Get quarter
+     *
+     * @return integer
+     */
+    public function getQuarter()
+    {
+        return $this->quarter;
     }
 }

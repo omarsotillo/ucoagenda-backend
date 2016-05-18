@@ -3,8 +3,8 @@
 namespace AppBundle\Controller\api;
 
 use AppBundle\Entity\Lesson;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -36,6 +36,8 @@ class LessonController extends FOSRestController
         }
         $degree_id = $request->request->get('degree_id', null);
         $name = $request->request->get('name', null);
+        $year = $request->request->get('year', null);
+        $quarter = $request->request->get('quarter', null);
 
         if (isset($degree_id) && isset($name)) {
             $em = $this->getDoctrine()->getManager();
@@ -44,6 +46,8 @@ class LessonController extends FOSRestController
             $lesson = new Lesson();
             $lesson->setDegree($degree);
             $lesson->setName($name);
+            $lesson->setQuarter($quarter);
+            $lesson->setYear($year);
 
             $em->persist($lesson);
             $em->flush();
