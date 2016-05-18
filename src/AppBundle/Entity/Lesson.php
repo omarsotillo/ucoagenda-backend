@@ -50,7 +50,7 @@ class Lesson
     private $hours;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User",mappedBy="lesson")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User",mappedBy="lessons")
      */
     private $users;
 
