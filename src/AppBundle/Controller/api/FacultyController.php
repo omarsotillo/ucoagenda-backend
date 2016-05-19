@@ -3,9 +3,9 @@
 namespace AppBundle\Controller\api;
 
 use AppBundle\Entity\Faculty;
-
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\FOSRestController;
+use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -25,11 +25,12 @@ class FacultyController extends FOSRestController
         $faculties = $this->getDoctrine()->getRepository("AppBundle:Faculty")->findAll();
         if (isset($faculties)) {
             $view = $this->view($faculties, 200)
-                ->setTemplateVar('faculties');
+                ->setTemplateVar('faculties')
+                ->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
         } else {
             $view = $this->view()
                 ->setStatusCode(404)
-                ->setHeader("Error","No values found")
+                ->setHeader("Error", "No values found")
                 ->setTemplateVar('faculties');
         }
         return $this->handleView($view);
@@ -44,7 +45,8 @@ class FacultyController extends FOSRestController
     public function getFacultyAction(Faculty $faculty)
     {
         $view = $this->view($faculty, 200)
-            ->setTemplateVar('faculty');
+            ->setTemplateVar('faculty')
+            ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
 
         return $this->handleView($view);
     }

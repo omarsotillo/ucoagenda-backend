@@ -5,6 +5,7 @@ namespace AppBundle\Controller\api;
 use AppBundle\Entity\Hour;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -61,7 +62,8 @@ class HourController extends FOSRestController
     public function getHourAction(Hour $hour)
     {
         $view = $this->view($hour, 200)
-            ->setTemplateVar('hour');
+            ->setTemplateVar('hour')
+            ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
 
         return $this->handleView($view);
     }

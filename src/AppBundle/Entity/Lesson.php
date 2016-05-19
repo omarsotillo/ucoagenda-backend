@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Lesson
@@ -51,6 +52,7 @@ class Lesson
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User",mappedBy="lessons")
+     * @Serializer\Exclude()
      */
     private $users;
 

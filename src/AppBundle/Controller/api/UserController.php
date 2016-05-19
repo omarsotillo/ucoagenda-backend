@@ -23,7 +23,7 @@ class UserController extends FOSRestController
         $username = $request->request->get('_username', null);
         $password = $request->request->get('_password', null);
         $email = $request->request->get('_email', null);
-        
+
         if (isset($email) && isset($password) && isset($username)) {
             $user->setUsername($username);
             $user->setPlainPassword($password);
@@ -60,44 +60,53 @@ class UserController extends FOSRestController
     public function updateUser(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        // $user = $em->getRepository('AppBundle:User')->find($id);
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $facultyID = $request->request->get('_facultyId', null);
         $degreeID = $request->request->get('_degreeId', null);
-
-        $view = $this->view();
+        $id_lessons = $request->request->get('_lessonsId', null);
 
         if (isset($user)) {
 
             if (isset($facultyID)) {
-                $user->setFaculty($facultyID);
+                $faculty = $this->getDoctrine()->getRepository('AppBundle:Faculty')->find($facultyID);
+                $user->setFaculty($faculty);
             }
             if (isset($degreeID)) {
-                $user->setDegree($degreeID);
+                $degree = $this->getDoctrine()->getRepository('AppBundle:Degree')->find($degreeID);
+                $user->setDegree($degree);
+            }
+            foreach ($id_lessons as $id_lesson) {
+                $lesson = $this->getDoctrine()->getRepository('AppBundle:Lesson')->find($id_lesson);
+                if (isset($lesson)) {
+                    $user->addLesson($lesson);
+                }
             }
             $user->setIsFirstTime(false);
+            $view = $this->view()
+                ->setStatusCode(200)
+                ->setData($user);
             $em->flush();
-
-            $view->setStatusCode(200);
-            $view->setData($user);
+        } else {
+            $view = $this->view()
+                ->setStatusCode(400);
         }
         return $this->handleView($view);
     }
 
     /**
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
      * @View()
      * @Post("/api/check_token")
      */
-    public function checkToken(Request $request)
+    public function checkToken()
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         if (isset($user)) {
-            $data = array('status' => "Token is valid", 'username' => $user->getUsername(), 'email' => $user->getEmail(), 'isFirstTime' => $user->getIsFirstTime(), 'roles' => $user->getRoles(), 'enabled' => $user->isEnabled());
+            $data = array('status' => "Token is valid", 'username' => $user->getUsername(), 'email' => $user->getEmail(), 'isFirstTime' => $user->getIsFirstTime(), 'roles' => $user->getRoles(), 'enabled' => $user->isEnabled(), 'lessons' => $user->getLessons());
             $view = $this->view()
                 ->setStatusCode(200)
                 ->setHeader('status', "There is a user in this token")

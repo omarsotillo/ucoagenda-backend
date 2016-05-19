@@ -4,8 +4,9 @@ namespace AppBundle\Controller\api;
 
 
 use AppBundle\Entity\Degree;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\FOSRestController;
+use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +20,8 @@ class DegreeController extends FOSRestController
     {
         $degrees = $this->getDoctrine()->getRepository("AppBundle:Degree")->findAll();
         $view = $this->view($degrees, 200)
-            ->setTemplateVar('degrees');
+            ->setTemplateVar('degrees')
+            ->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
 
         return $this->handleView($view);
     }
@@ -33,7 +35,8 @@ class DegreeController extends FOSRestController
     public function getDegreeAction(Degree $degree)
     {
         $view = $this->view($degree, 200)
-            ->setTemplateVar('degrees');
+            ->setTemplateVar('degree')
+            ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
 
         return $this->handleView($view);
     }

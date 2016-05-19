@@ -19,6 +19,7 @@ class Faculty
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"list","detail"})
      */
     private $id;
 
@@ -26,6 +27,7 @@ class Faculty
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=80)
+     * @Serializer\Groups({"list","detail"})
      */
     private $name;
 
@@ -33,17 +35,19 @@ class Faculty
      * @var string
      *
      * @ORM\Column(name="location", type="string", length=255)
+     * @Serializer\Groups({"list","detail"})
      */
     private $location;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Degree",mappedBy="faculty")
-     * 
+     * @Serializer\Groups({"detail"})
      */
     private $degrees;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User",mappedBy="faculty")
+     * @Serializer\Exclude()
      */
     private $users;
     /**

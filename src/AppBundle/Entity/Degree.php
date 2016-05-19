@@ -19,6 +19,7 @@ class Degree
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"list","detail"})
      */
     private $id;
 
@@ -26,21 +27,25 @@ class Degree
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Serializer\Groups({"list","detail"})
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Faculty",inversedBy="degrees")
      * @ORM\JoinColumn(name="faculty_id",referencedColumnName="id", onDelete="CASCADE")
+     * @Serializer\Groups({"detail"})
      */
     private $faculty;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lesson",mappedBy="degree")
+     * @Serializer\Groups({"detail"})
      */
     private $lessons;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User",mappedBy="degree")
+     * @Serializer\Exclude()
      */
     private $users;
 
