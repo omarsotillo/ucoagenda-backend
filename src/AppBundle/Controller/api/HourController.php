@@ -36,6 +36,9 @@ class HourController extends FOSRestController
             $hour->setIsTheory($isTheory);
             $hour->setLesson($lesson);
 
+            $hour->setStartHour($startHour);
+            $hour->setFinishHour($finishHour);
+
             $em->persist($hour);
             $em->flush();
 

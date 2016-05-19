@@ -23,8 +23,7 @@ class UserController extends FOSRestController
         $username = $request->request->get('_username', null);
         $password = $request->request->get('_password', null);
         $email = $request->request->get('_email', null);
-
-
+        
         if (isset($email) && isset($password) && isset($username)) {
             $user->setUsername($username);
             $user->setPlainPassword($password);
@@ -84,6 +83,30 @@ class UserController extends FOSRestController
             $view->setStatusCode(200);
             $view->setData($user);
         }
+        return $this->handleView($view);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @View()
+     * @Post("/api/check_token")
+     */
+    public function checkToken(Request $request)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        if (isset($user)) {
+            $data = array('status' => "Token is valid", 'username' => $user->getUsername(), 'email' => $user->getEmail(), 'isFirstTime' => $user->getIsFirstTime(), 'roles' => $user->getRoles(), 'enabled' => $user->isEnabled());
+            $view = $this->view()
+                ->setStatusCode(200)
+                ->setHeader('status', "There is a user in this token")
+                ->setData($data);
+        } else {
+            $data = array('Error' => "Token is not valid");
+            $view = $this->view()->setStatusCode(401)->setData($data);
+        }
+
         return $this->handleView($view);
     }
 
