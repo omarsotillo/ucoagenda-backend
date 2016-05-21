@@ -8,6 +8,7 @@ JWT (Json Web Tokens).
 The front-end of the App is done by [Iván Portillo](https://github.com/ivanportillo)
 in a React-Redux Architecture.
 
+[APIdoc of the app](http://188.166.165.65:8000/api/doc)
 ## BUNDLES
 For this project the bundles implemented are the following:
 - [lexik/LexikJWTAuthenticationBundle](https://github.com/lexik/LexikJWTAuthenticationBundle)

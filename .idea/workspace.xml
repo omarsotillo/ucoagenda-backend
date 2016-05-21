@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a24395de-a2d4-4ddb-a145-6656fb4393ed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config.yml" afterPath="$PROJECT_DIR$/app/config/config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/api/DegreeController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/api/DegreeController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/api/FacultyController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/api/FacultyController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/api/HourController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/api/HourController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/api/LessonController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/api/LessonController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/api/UserController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/api/UserController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="uco-horarios.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,7 +76,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DegreeController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DegreeController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/api/DegreeController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3048">
@@ -89,6 +84,19 @@
               <folding>
                 <element signature="e#44#72#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="240">
+                <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+                <folding />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -114,7 +122,6 @@
         <option value="$PROJECT_DIR$/vendor/lexik/jwt-authentication-bundle/Lexik/Bundle/JWTAuthenticationBundle/.gitignore" />
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/UserController.php" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/app/config/parameters.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Hour.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Degree.php" />
@@ -130,6 +137,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/api/HourController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/api/FacultyController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/api/DegreeController.php" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -433,12 +441,12 @@
       <workItem from="1463692177462" duration="1681000" />
       <workItem from="1463824007235" duration="515000" />
       <workItem from="1463824536137" duration="1215000" />
-      <workItem from="1463827377306" duration="8620000" />
+      <workItem from="1463827377306" duration="9277000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="115045000" />
+    <option name="totallyTimeSpent" value="115702000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1081" extended-state="6" />
@@ -710,22 +718,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="312">
-            <caret line="13" column="69" selection-start-line="13" selection-start-column="69" selection-end-line="13" selection-end-column="69" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="45" column="53" selection-start-line="45" selection-start-column="53" selection-end-line="45" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Degree.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
@@ -871,6 +863,22 @@
           <folding>
             <element signature="e#44#72#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="240">
+            <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="45" column="53" selection-start-line="45" selection-start-column="53" selection-end-line="45" selection-end-column="53" />
         </state>
       </provider>
     </entry>
