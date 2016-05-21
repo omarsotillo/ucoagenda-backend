@@ -5,7 +5,6 @@ namespace AppBundle\Controller\api;
 use AppBundle\Entity\Degree;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
-use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -24,7 +23,7 @@ class DegreeController extends FOSRestController
         $degrees = $this->getDoctrine()->getRepository("AppBundle:Degree")->findAll();
         $view = $this->view($degrees, 200)
             ->setTemplateVar('degrees');
-            // ->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
+        // ->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
 
         return $this->handleView($view);
     }
@@ -42,7 +41,7 @@ class DegreeController extends FOSRestController
         }
         $view = $this->view($degree, 200)
             ->setTemplateVar('degree');
-            // ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
+        // ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
 
         return $this->handleView($view);
     }
@@ -60,7 +59,7 @@ class DegreeController extends FOSRestController
         $new_id = $request->request->get('faculty_id', null);
         $name = $request->request->get('name', null);
 
-        if (isset($new_id) && isset($name)) {
+        if (isset($new_id, $name)) {
             $faculty = $this->getDoctrine()->getRepository('AppBundle:Faculty')->find($new_id);
             $degree = new Degree();
             $degree->setFaculty($faculty);
@@ -69,10 +68,10 @@ class DegreeController extends FOSRestController
             $em = $this->getDoctrine()->getManager();
             $em->persist($degree);
             $em->flush();
-            $view = $this->view($degree, 200)->setTemplateVar("degrees");
+            $view = $this->view($degree, 200)->setTemplateVar('degrees');
         } else {
             $view = $this->view()
-                ->setHeader("error", "Not good way of sending the files")
+                ->setHeader('error', 'Not good body of sending the faculty')
                 ->setStatusCode(400);
         }
 

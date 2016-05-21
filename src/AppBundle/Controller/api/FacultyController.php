@@ -5,7 +5,6 @@ namespace AppBundle\Controller\api;
 use AppBundle\Entity\Faculty;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
-use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -26,11 +25,11 @@ class FacultyController extends FOSRestController
         if (isset($faculties)) {
             $view = $this->view($faculties, 200)
                 ->setTemplateVar('faculties');
-                //->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
+            //->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
         } else {
             $view = $this->view()
                 ->setStatusCode(404)
-                ->setHeader("Error", "No values found")
+                ->setHeader('Error', 'No values found')
                 ->setTemplateVar('faculties');
         }
         return $this->handleView($view);
@@ -49,7 +48,7 @@ class FacultyController extends FOSRestController
         }
         $view = $this->view($faculty, 200)
             ->setTemplateVar('faculty');
-            // ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
+        // ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
 
         return $this->handleView($view);
     }
@@ -67,7 +66,7 @@ class FacultyController extends FOSRestController
         $name = $request->request->get('name', null);
         $location = $request->request->get('location', null);
 
-        if (isset($name) && isset($location)) {
+        if (isset($name, $location)) {
             $faculty = new Faculty();
             $faculty->setName($name);
             $faculty->setLocation($location);
@@ -82,7 +81,7 @@ class FacultyController extends FOSRestController
 
         } else {
             $view = $this->view()
-                ->setHeader("Error", "Not a good way to be inserted check the json values")
+                ->setHeader('Error', 'Not a good way to be inserted check the json values')
                 ->setStatusCode(400);
         }
 

@@ -45,10 +45,11 @@ class LessonController extends FOSRestController
         $year = $request->request->get('year', null);
         $quarter = $request->request->get('quarter', null);
 
-        if (isset($degree_id) && isset($name)) {
+        if (isset($degree_id, $name)) {
             $em = $this->getDoctrine()->getManager();
 
             $degree = $this->getDoctrine()->getRepository('AppBundle:Degree')->find($degree_id);
+
             $lesson = new Lesson();
             $lesson->setDegree($degree);
             $lesson->setName($name);
@@ -58,11 +59,11 @@ class LessonController extends FOSRestController
             $em->persist($lesson);
             $em->flush();
 
-            $data = array('Lesson added' => $lesson, 'status message' => "Added correctly the lesson");
+            $data = array('Lesson added' => $lesson, 'status message' => 'Added correctly the lesson');
             $view = $this->view()->setStatusCode(200)->setData($data);
         } else {
-            $data = array('Status_Code' => "Error adding the lesson");
-            $view = $this->view()->setStatusCode(401) > setData($data);
+            $data = array('Status_Code' => 'Error adding the lesson');
+            $view = $this->view()->setStatusCode(401)->setData($data);
         }
 
         return $this->handleView($view);
@@ -102,6 +103,6 @@ class LessonController extends FOSRestController
         $em->remove($lesson);
         $em->flush();
 
-        return $this->handleView($this->view()->setStatusCode(200)->setHeader('Status', "Deleted correctly"));
+        return $this->handleView($this->view()->setStatusCode(200)->setHeader('Status', 'Deleted correctly'));
     }
 }

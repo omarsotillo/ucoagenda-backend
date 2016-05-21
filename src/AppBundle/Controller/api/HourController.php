@@ -32,7 +32,7 @@ class HourController extends FOSRestController
         $isTheory = $request->request->get('theory', null);
         $id_lesson = $request->request->get('id_lesson', null);
 
-        if (isset($finishHour) && isset($weekday) && isset($duration) && isset($startHour) && isset($class) && isset($isTheory) && isset($id_lesson)) {
+        if (isset($finishHour,$weekday,$duration,$startHour,$class,$isTheory,$id_lesson)) {
             $hour = new Hour();
             $em = $this->getDoctrine()->getManager();
             $lesson = $this->getDoctrine()->getRepository('AppBundle:Lesson')->find($id_lesson);
@@ -49,12 +49,12 @@ class HourController extends FOSRestController
             $em->persist($hour);
             $em->flush();
 
-            $array = array('Hour' => $hour, 'Status' => "Added correctly the hour");
+            $array = array('Hour' => $hour, 'Status' => 'Added correctly the hour');
             $view = $this->view()->setStatusCode(204)->setData($array);
 
         } else {
 
-            $view = $this->view()->setStatusCode(400)->setHeader('error', "Error inserting a new hour");
+            $view = $this->view()->setStatusCode(400)->setHeader('error', 'Error inserting a new hour');
         }
         return $this->handleView($view);
     }
