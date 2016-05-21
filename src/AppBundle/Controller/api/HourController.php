@@ -8,16 +8,22 @@ use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class HourController extends FOSRestController
 {
     /**
      * @param Request $request
-     * @View()
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws AccessDeniedException
+     * @View()
      */
     public function postHourAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $startHour = $request->request->get('startHour', null);
         $finishHour = $request->request->get('finishHour', null);
         $duration = $request->request->get('duration', null);

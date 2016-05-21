@@ -25,8 +25,8 @@ class FacultyController extends FOSRestController
         $faculties = $this->getDoctrine()->getRepository("AppBundle:Faculty")->findAll();
         if (isset($faculties)) {
             $view = $this->view($faculties, 200)
-                ->setTemplateVar('faculties')
-                ->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
+                ->setTemplateVar('faculties');
+                //->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
         } else {
             $view = $this->view()
                 ->setStatusCode(404)
@@ -44,9 +44,12 @@ class FacultyController extends FOSRestController
      */
     public function getFacultyAction(Faculty $faculty)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
         $view = $this->view($faculty, 200)
-            ->setTemplateVar('faculty')
-            ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
+            ->setTemplateVar('faculty');
+            // ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
 
         return $this->handleView($view);
     }
@@ -87,14 +90,17 @@ class FacultyController extends FOSRestController
     }
 
     /**
-     * @param Request $request
      * @param Faculty $faculty
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
      * @ParamConverter("faculty", class="AppBundle:Faculty")
      * @View()
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteFacultyAction(Request $request, Faculty $faculty)
+    public function deleteFacultyAction(Faculty $faculty)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($faculty);
         $em->flush();

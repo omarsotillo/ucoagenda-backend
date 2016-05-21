@@ -17,6 +17,9 @@ class LessonController extends FOSRestController
      */
     public function getLessonsAction()
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
         $lessons = $this->getDoctrine()->getRepository("AppBundle:Lesson")->findAll();
         $view = $this->view($lessons, 200)
             ->setTemplateVar('lessons');
@@ -31,6 +34,9 @@ class LessonController extends FOSRestController
      */
     public function postLessonAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
@@ -71,6 +77,9 @@ class LessonController extends FOSRestController
      */
     public function getLessonAction(Lesson $lesson)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
         $view = $this->view($lesson, 200)
             ->setTemplateVar('lesson');
 
@@ -85,6 +94,9 @@ class LessonController extends FOSRestController
      */
     public function deleteLessonAction(Lesson $lesson)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
 
         $em->remove($lesson);

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+
 /**
  * User
  *
@@ -23,11 +24,11 @@ class User extends BaseUser
 
     /**
      * @var boolean
-     * 
+     *
      * @ORM\Column(name="isFirstTime",type="boolean",)
-     * 
+     *
      */
-    private $isFirstTime=true;
+    private $isFirstTime = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Faculty",inversedBy="users")
@@ -45,6 +46,7 @@ class User extends BaseUser
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Lesson",inversedBy="users")
      */
     private $lessons;
+
     /**
      * Get id
      *
@@ -54,6 +56,7 @@ class User extends BaseUser
     {
         return $this->id;
     }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {

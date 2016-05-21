@@ -42,6 +42,7 @@ class Lesson
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Degree",inversedBy="lessons")
      * @ORM\JoinColumn(name="degree_id",referencedColumnName="id",onDelete="CASCADE")
+     * @Serializer\Exclude()
      */
     private $degree;
 

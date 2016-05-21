@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller\api;
 
-
 use AppBundle\Entity\Degree;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class DegreeController extends FOSRestController
 {
@@ -18,10 +18,13 @@ class DegreeController extends FOSRestController
      */
     public function getDegreesAction()
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
         $degrees = $this->getDoctrine()->getRepository("AppBundle:Degree")->findAll();
         $view = $this->view($degrees, 200)
-            ->setTemplateVar('degrees')
-            ->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
+            ->setTemplateVar('degrees');
+            // ->setSerializationContext(SerializationContext::create()->setGroups(array('list')));
 
         return $this->handleView($view);
     }
@@ -34,9 +37,12 @@ class DegreeController extends FOSRestController
      */
     public function getDegreeAction(Degree $degree)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
         $view = $this->view($degree, 200)
-            ->setTemplateVar('degree')
-            ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
+            ->setTemplateVar('degree');
+            // ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
 
         return $this->handleView($view);
     }
@@ -48,6 +54,9 @@ class DegreeController extends FOSRestController
      */
     public function postDegreeAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $new_id = $request->request->get('faculty_id', null);
         $name = $request->request->get('name', null);
 
@@ -76,6 +85,9 @@ class DegreeController extends FOSRestController
      */
     public function deleteDegreeAction(Degree $degree)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($degree);
         $em->flush();
