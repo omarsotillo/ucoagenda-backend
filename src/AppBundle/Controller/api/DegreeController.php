@@ -5,6 +5,7 @@ namespace AppBundle\Controller\api;
 use AppBundle\Entity\Degree;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -12,6 +13,24 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class DegreeController extends FOSRestController
 {
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Degree",
+     *  description="Get an array of the degrees within the app",
+     *  statusCodes={
+     *      200="Returned when all values are returned",
+     *      401="Unauthorized"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @return array
      * @View()
      */
@@ -29,6 +48,24 @@ class DegreeController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Degree",
+     *  description="Get a specific degree",
+     *  statusCodes={
+     *      200="Returned when a degree is received",
+     *      401="Unauthorized"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Degree $degree
      * @return array
      * @View()
@@ -47,6 +84,26 @@ class DegreeController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Degree",
+     *  description="Post a degree",
+     *  statusCodes={
+     *      202="Returned when a degree is created",
+     *      401="Unauthorized",
+     *      400="Not valid request",
+     *  },
+     *  parameters={
+     *      {"name"="faculty_id", "dataType"="integer","required"=true,"description"="Faculty parent of the degree"},
+     *      {"name"="name", "dataType"="string","required"=true,"description"="Name of the degree"},
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @View()
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -68,7 +125,7 @@ class DegreeController extends FOSRestController
             $em = $this->getDoctrine()->getManager();
             $em->persist($degree);
             $em->flush();
-            $view = $this->view($degree, 200)->setTemplateVar('degrees');
+            $view = $this->view($degree, 202)->setTemplateVar('degrees');
         } else {
             $view = $this->view()
                 ->setHeader('error', 'Not good body of sending the faculty')
@@ -79,6 +136,24 @@ class DegreeController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Degree",
+     *  description="Delete a degree",
+     *  statusCodes={
+     *      200="Returned when deleted a degree",
+     *      401="Unauthorized"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Degree $degree
      * @ParamConverter("degree",class="AppBundle:Degree")
      */

@@ -5,6 +5,7 @@ namespace AppBundle\Controller\api;
 use AppBundle\Entity\Lesson;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -12,6 +13,24 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class LessonController extends FOSRestController
 {
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Lesson",
+     *  description="Get an array of the lessons within the app",
+     *  statusCodes={
+     *      200="Returned when all values are returned",
+     *      401="Unauthorized"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @return array
      * @View()
      */
@@ -28,6 +47,28 @@ class LessonController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Lesson",
+     *  description="Post a lesson",
+     *  statusCodes={
+     *      202="Returned when a lesson is created",
+     *      401="Unauthorized",
+     *      400="Not valid request",
+     *  },
+     *  parameters={
+     *      {"name"="degree_id", "dataType"="integer","required"=true,"description"="degree id of the lesson. Parent info"},
+     *      {"name"="name", "dataType"="string","required"=true,"description"="Name of the lesson"},
+     *      {"name"="year", "dataType"="integer","required"=true,"description"="Year of the lesson"},
+     *      {"name"="quarter", "dataType"="integer","required"=true,"description"="Quarter of the lesson"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Request $request
      * @return array
      * @View()
@@ -60,10 +101,10 @@ class LessonController extends FOSRestController
             $em->flush();
 
             $data = array('Lesson added' => $lesson, 'status message' => 'Added correctly the lesson');
-            $view = $this->view()->setStatusCode(200)->setData($data);
+            $view = $this->view()->setStatusCode(202)->setData($data);
         } else {
             $data = array('Status_Code' => 'Error adding the lesson');
-            $view = $this->view()->setStatusCode(401)->setData($data);
+            $view = $this->view()->setStatusCode(400)->setData($data);
         }
 
         return $this->handleView($view);
@@ -71,6 +112,24 @@ class LessonController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Lesson",
+     *  description="Get a specific lesson of a user",
+     *  statusCodes={
+     *      200="Returned when a lesson is received",
+     *      401="Unauthorized"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Lesson $lesson
      * @return array
      * @View()
@@ -88,6 +147,24 @@ class LessonController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Lesson",
+     *  description="Delete a lesson",
+     *  statusCodes={
+     *      200="Returned when deleted a lesson",
+     *      401="Unauthorized"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Lesson $lesson
      * @View()
      * @ParamConverter("lesson",class="AppBundle:Lesson")

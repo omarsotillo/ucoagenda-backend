@@ -17,10 +17,16 @@ class UserController extends FOSRestController
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="This is a description of your API method",
-     *  filters={
-     *      {"name"="a-filter", "dataType"="integer"},
-     *      {"name"="another-filter", "dataType"="string", "pattern"="(foo|bar) ASC|DESC"}
+     *  section="User",
+     *  description="Register new users in the app",
+     *  parameters={
+     *      {"name"="_username", "dataType"="string","required"=true,"description"="Username of the user"},
+     *      {"name"="_password", "dataType"="string","required"=true,"description"="Password of the user"},
+     *      {"name"="_email", "dataType"="string","required"=true,"description"="Email of the user"}
+     *  },
+     *  statusCodes={
+     *      201="Returned when successful created a user",
+     *      400="Returned when not created correctly the user"
      *  }
      * )
      * @param Request $request
@@ -49,22 +55,40 @@ class UserController extends FOSRestController
 
             $array = array('user_username' => $user->getUsername(), 'user_email' => $user->getEmail(), 'status' => 'User added correctly');
             $view = $this->view()
-                ->setStatusCode(200)
+                ->setStatusCode(201)
                 ->setData($array);
 
         } else {
             $array = array('status' => 'No user created');
             $view = $this->view()
-                ->setStatusCode(404)
+                ->setStatusCode(400)
                 ->setData($array);
         }
         return $this->handleView($view);
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="User",
+     *  description="Update the user of the token received",
+     *  statusCodes={
+     *      200="Returned when updated a user",
+     *      400="Returned when not updated correctly the user"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Request $request
-     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param $id
      * @View()
      * @Put("/api/user")
      */
@@ -107,6 +131,24 @@ class UserController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Token",
+     *  description="Check a token parameter and return the user value of the user",
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  statusCodes={
+     *      200="Returned the user value and received correctly",
+     *      401="Unauthorized token"
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
      * @View()

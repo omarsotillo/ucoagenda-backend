@@ -6,6 +6,7 @@ use AppBundle\Entity\Hour;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializationContext;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -13,6 +14,31 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class HourController extends FOSRestController
 {
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Hour",
+     *  description="Post a hour",
+     *  statusCodes={
+     *      202="Returned when a hour is created",
+     *      401="Unauthorized",
+     *      400="Not valid request",
+     *  },
+     *  parameters={
+     *      {"name"="startHour", "dataType"="string","required"=true,"description"="Start hour of a lesson. "},
+     *      {"name"="finishHour", "dataType"="string","required"=true,"description"="Finish hour of a lesson"},
+     *      {"name"="duration", "dataType"="integer","required"=true,"description"="Duration of a lesson"},
+     *      {"name"="classroom", "dataType"="string","required"=true,"description"="Classroom of a lesson"},
+     *      {"name"="theory", "dataType"="boolean","required"=true,"description"="Theory of a lesson"},
+     *      {"name"="id_lesson", "dataType"="integer","required"=true,"description"="ID of a lesson"},
+     *      {"name"="weekday", "dataType"="integer","required"=true,"description"="Week day of the lesson"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws AccessDeniedException
@@ -50,7 +76,7 @@ class HourController extends FOSRestController
             $em->flush();
 
             $array = array('Hour' => $hour, 'Status' => 'Added correctly the hour');
-            $view = $this->view()->setStatusCode(204)->setData($array);
+            $view = $this->view()->setStatusCode(202)->setData($array);
 
         } else {
 
@@ -59,18 +85,4 @@ class HourController extends FOSRestController
         return $this->handleView($view);
     }
 
-    /**
-     * @param Hour $hour
-     * @return array
-     * @View()
-     * @ParamConverter("faculty",class="AppBundle:Faculty")
-     */
-    public function getHourAction(Hour $hour)
-    {
-        $view = $this->view($hour, 200)
-            ->setTemplateVar('hour')
-            ->setSerializationContext(SerializationContext::create()->setGroups(array('detail')));
-
-        return $this->handleView($view);
-    }
 }

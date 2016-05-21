@@ -106,4 +106,6 @@ nelmio_cors:
     paths:
         '^/': ~
 
-nelmio_api_doc: ~
+nelmio_api_doc:
+    name: UcoAgendaAPI
+

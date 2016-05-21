@@ -5,6 +5,7 @@ namespace AppBundle\Controller\api;
 use AppBundle\Entity\Faculty;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -12,6 +13,24 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class FacultyController extends FOSRestController
 {
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Faculty",
+     *  description="Get an array of the faculties within the app",
+     *  statusCodes={
+     *      200="Returned when all values are returned",
+     *      401="Unauthorized"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @return array
      * @throws AccessDeniedException
      * @View(serializerEnableMaxDepthChecks=true)
@@ -36,6 +55,24 @@ class FacultyController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Faculty",
+     *  description="Get a specific faculty",
+     *  statusCodes={
+     *      200="Returned when a faculty is received",
+     *      401="Unauthorized"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Faculty $faculty
      * @return array
      * @View()
@@ -54,6 +91,26 @@ class FacultyController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Faculty",
+     *  description="Post a faculty",
+     *  statusCodes={
+     *      202="Returned when a faculty is created",
+     *      401="Unauthorized",
+     *      400="Not valid request",
+     *  },
+     *  parameters={
+     *      {"name"="name", "dataType"="string","required"=true,"description"="Name of the lesson"},
+     *      {"name"="location", "dataType"="string","required"=true,"description"="Location of the faculty"},
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @View()
@@ -89,6 +146,24 @@ class FacultyController extends FOSRestController
     }
 
     /**
+     * @ApiDoc(
+     *  resource=true,
+     *  section="Faculty",
+     *  description="Delete a faculty",
+     *  statusCodes={
+     *      200="Returned when deleted a lesson",
+     *      401="Unauthorized"
+     *  },
+     *  parameters={
+     *      {"name"="token", "dataType"="string","required"=true,"description"="Header token of the app"}
+     *  },
+     *  headers={
+     *         {
+     *             "name"="Authorization",
+     *             "description"="Authorization token used for update the user"
+     *         }
+     *     }
+     * )
      * @param Faculty $faculty
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
