@@ -164,6 +164,19 @@ class User extends BaseUser
     }
 
     /**
+     * Remove lesson
+     *
+     * @param \AppBundle\Entity\Lesson $lesson
+     */
+    public function removeLessons()
+    {
+        foreach ($this->lessons as $lesson) {
+            $this->lessons->removeElement($lesson);
+        }
+        $this->lessons = null;
+    }
+
+    /**
      * Get lessons
      *
      * @return \Doctrine\Common\Collections\Collection
