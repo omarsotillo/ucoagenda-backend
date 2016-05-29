@@ -112,6 +112,12 @@ class UserController extends FOSRestController
                 $degree = $this->getDoctrine()->getRepository('AppBundle:Degree')->find($degreeID);
                 $user->setDegree($degree);
             }
+            $lessons = $user->getLessons();
+            if (isset($lessons)) {
+                foreach ($lessons as $lessonToBeDeleted) {
+                    $user->removeLesson($lessonToBeDeleted);
+                }
+            }
             foreach ($id_lessons as $id_lesson) {
                 $lesson = $this->getDoctrine()->getRepository('AppBundle:Lesson')->find($id_lesson);
                 if (isset($lesson)) {
