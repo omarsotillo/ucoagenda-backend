@@ -38,7 +38,7 @@ class Degree
      */
     private $faculty;
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lesson",mappedBy="degree",onDelete="CASCADE")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lesson",mappedBy="degree")
      * @Serializer\Groups({"detail"})
      */
     private $lessons;
