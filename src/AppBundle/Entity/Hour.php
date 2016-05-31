@@ -22,14 +22,12 @@ class Hour
     private $id;
 
     /**
-     * @var \DateTime
      *
      * @ORM\Column(name="startHour", type="string")
      */
     private $startHour;
 
     /**
-     * @var \DateTime
      *
      * @ORM\Column(name="finishHour", type="string")
      */
@@ -85,6 +83,11 @@ class Hour
         $this->startHour = $startHour;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->startHour . ' ' . $this->dayOfTheWeek;
     }
 
     /**

@@ -238,4 +238,9 @@ class Lesson
     {
         return $this->quarter;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

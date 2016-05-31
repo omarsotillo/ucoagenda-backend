@@ -85,6 +85,9 @@ fos_rest:
         enabled: true
         rules:
             - { path: '^/api', priorities: ['json', 'xml'], fallback_format: 'html' }
+            - { path: '^/admin_ultra_secreto/', stop: true }
+            - { path: '^/login', stop: true }
+
     view:
         view_response_listener: 'force'
     access_denied_listener:
@@ -109,3 +112,107 @@ nelmio_cors:
 nelmio_api_doc:
     name: UcoAgendaAPI
 
+easy_admin:
+    site_name: 'UcoAgenda'
+    entities:
+        Users:
+            class: AppBundle\Entity\User
+            list:
+                title: 'List of users'
+                fields:
+                    - id
+                    - username
+                    - email
+                    - faculty
+                    - degree
+                    - enabled
+            form:
+                fields:
+                    - username
+                    - email
+                    - faculty
+                    - degree
+                    - lessons
+                    - enabled
+            edit:
+                 title: 'Edit a faculty'
+            new:
+                 title: 'Add a faculty'
+        Faculties:
+            class: AppBundle\Entity\Faculty
+            list:
+                title: 'List of faculties.'
+                fields:
+                    - id
+                    - name
+                    - location
+            form:
+                fields:
+                     - name
+                     - location
+            edit:
+                title: 'Edit a faculty'
+            new:
+                title: 'Add a faculty'
+        Degrees:
+            class: AppBundle\Entity\Degree
+            list:
+                title: 'List of degrees'
+                fields:
+                    - id
+                    - name
+                    - faculty
+            form:
+                fields:
+                    - name
+                    - faculty
+            edit:
+                title: 'Edit a degree'
+            new:
+                title: 'Add a degree'
+        Lessons:
+            class: AppBundle\Entity\Lesson
+            list:
+                title: 'List of lessons'
+                fields:
+                    - id
+                    - name
+                    - year
+                    - quarter
+            form:
+                fields:
+                    - name
+                    - degree
+                    - year
+                    - quarter
+                    - hours
+            edit:
+                title: 'Edit a lesson'
+            new:
+                title: 'Add a lesson'
+        Hour:
+            class: AppBundle\Entity\Hour
+            list:
+                title: 'List of hours'
+                fields:
+                    - id
+                    - startHour
+                    - finishHour
+                    - dayOfTheWeek
+                    - isTheory
+                    - classLocation
+                    - duration
+                    - lesson
+            form:
+                fields:
+                    - startHour
+                    - finishHour
+                    - dayOfTheWeek
+                    - isTheory
+                    - classLocation
+                    - duration
+                    - lesson
+            edit:
+                title: 'Edit a hour'
+            new:
+                title: 'Add a hour'

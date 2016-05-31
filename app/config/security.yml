@@ -47,4 +47,4 @@ security:
     - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
-    - { path: ^/admin/, role: ROLE_ADMIN }
+    - { path: ^/admin/, role: IS_AUTHENTICATED_ANONYMOUSLY }

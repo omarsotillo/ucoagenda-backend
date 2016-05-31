@@ -101,7 +101,6 @@ class UserController extends FOSRestController
         $facultyID = $request->request->get('_facultyId', null);
         $degreeID = $request->request->get('_degreeId', null);
         $id_lessons = $request->request->get('_lessonsId', null);
-
         if (isset($user)) {
 
             if (isset($facultyID)) {
@@ -151,7 +150,6 @@ class UserController extends FOSRestController
      *     }
      * )
      * @return \Symfony\Component\HttpFoundation\Response
-     * @internal param Request $request
      * @View()
      * @Post("/api/check_token")
      */

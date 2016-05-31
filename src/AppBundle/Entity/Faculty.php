@@ -50,6 +50,7 @@ class Faculty
      * @Serializer\Exclude()
      */
     private $users;
+
     /**
      * Get id
      *
@@ -107,6 +108,7 @@ class Faculty
     {
         return $this->location;
     }
+
     /**
      * Constructor
      */
@@ -205,5 +207,10 @@ class Faculty
     public function getUsers()
     {
         return $this->users;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }
