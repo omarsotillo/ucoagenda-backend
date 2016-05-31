@@ -179,6 +179,7 @@ easy_admin:
                     - name
                     - year
                     - quarter
+                    - degree
             form:
                 fields:
                     - name
