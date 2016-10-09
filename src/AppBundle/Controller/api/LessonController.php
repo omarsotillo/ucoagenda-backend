@@ -78,9 +78,6 @@ class LessonController extends FOSRestController
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
         $degree_id = $request->request->get('degree_id', null);
         $name = $request->request->get('name', null);
         $year = $request->request->get('year', null);
